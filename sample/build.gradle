@@ -25,6 +25,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(':ctksteppager')
+
     implementation deps.kotlin
     implementation deps.android.support.appcompat
     implementation deps.android.support.constraintlayout
