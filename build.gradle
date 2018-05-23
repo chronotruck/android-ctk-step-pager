@@ -20,7 +20,9 @@ allprojects {
 }
 
 ext {
-    appcompat_version = '27.1.1'
+    supportlib_version = '27.1.1'
+    appcompat_version = supportlib_version
+    design_version = supportlib_version
     constraintlayout_version = '1.1.0'
     junit_version = '4.12'
     testrunner_version = '1.0.2'
@@ -31,8 +33,10 @@ ext.deps = [
         'kotlin' : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
         'android': [
                 'support': [
+                        'core'            : "com.android.support:support-v4:$supportlib_version",
                         'appcompat'       : "com.android.support:appcompat-v7:$appcompat_version",
-                        'constraintlayout': "com.android.support.constraint:constraint-layout:$constraintlayout_version"
+                        'constraintlayout': "com.android.support.constraint:constraint-layout:$constraintlayout_version",
+                        'design'          : "com.android.support:design:$design_version"
                 ]
         ],
         'test'   : [
