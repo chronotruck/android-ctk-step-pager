@@ -17,31 +17,35 @@ class CtkStepTab @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val constraintSetActive = ConstraintSet()
-    private val constraintSetInactive = ConstraintSet()
-    private var constraintLayout: ConstraintLayout = inflate(context, R.layout.layout_ctk_step_tab_active, this) as ConstraintLayout
+    private val constraintSetOpen = ConstraintSet()
+    private val constraintSetClose = ConstraintSet()
+    private lateinit var parentLayout: ConstraintLayout
 
-    init {
-        initConstraintLayout()
-        switchLayout(isActivated)
+    var isOpen: Boolean
+        get() = isActivated
+    set(value) {
+        isActivated = value
+        switchLayout(value)
     }
 
-    override fun setActivated(activated: Boolean) {
-        super.setActivated(activated)
-        switchLayout(activated)
+    init {
+        inflate(context, R.layout.layout_ctk_step_tab_close, this)
+        initConstraintLayout()
+        switchLayout(isOpen)
     }
 
     private fun initConstraintLayout() {
-        constraintSetActive.clone(constraintLayout)
-        constraintSetInactive.clone(context, R.layout.layout_ctk_step_tab_inactive)
+        parentLayout = findViewById(R.id.cl)
+        constraintSetClose.clone(parentLayout)
+        constraintSetOpen.clone(context, R.layout.layout_ctk_step_tab_open)
     }
 
-    private fun switchLayout(activated: Boolean) {
-        TransitionManager.beginDelayedTransition(constraintLayout)
-        if (activated) {
-            constraintSetActive.applyTo(constraintLayout)
+    private fun switchLayout(open: Boolean) {
+        if (open) {
+            constraintSetOpen
         } else {
-            constraintSetInactive.applyTo(constraintLayout)
-        }
+            constraintSetClose
+        }.applyTo(parentLayout)
+        TransitionManager.beginDelayedTransition(parentLayout)
     }
 }
