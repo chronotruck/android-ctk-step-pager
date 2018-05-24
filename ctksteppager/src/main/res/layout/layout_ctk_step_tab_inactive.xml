@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/cl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:layout_height="@dimen/steptab_height"
-    tools:layout_width="wrap_content"
+    android:layout_height="@dimen/steptab_height"
+    android:layout_width="wrap_content"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <android.support.constraint.Group
@@ -35,7 +36,8 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/group"
         app:layout_constraintTop_toTopOf="@id/group"
-        tools:text="1"/>
+        tools:text="1"
+        android:text="1"/>
 
     <ImageView
         android:id="@+id/imageview"
@@ -44,4 +46,4 @@
         android:src="@drawable/shape_delta"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription"/>
-</merge>
+</android.support.constraint.ConstraintLayout>
