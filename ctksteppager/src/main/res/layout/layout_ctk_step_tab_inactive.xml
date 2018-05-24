@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/cl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:layout_height="@dimen/st_height"
-    tools:layout_width="match_parent"
+    android:layout_height="@dimen/steptab_height"
+    android:layout_width="wrap_content"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <android.support.constraint.Group
+        android:id="@+id/group"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/st_background"
-        app:constraint_referenced_ids="number_textview, step_textview"
+        android:background="@color/steptab_background"
+        app:constraint_referenced_ids="number_textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
         android:id="@+id/number_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/bg_st_number"
+        android:background="@drawable/bg_steptab_number_inactive"
         android:gravity="center"
-        android:textColor="@color/st_text"
-        android:textSize="@dimen/st_number_text"
+        android:textColor="@color/steptab_text_inactive"
+        android:textSize="@dimen/steptab_number_textsize"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1"/>
-
-    <TextView
-        android:id="@+id/step_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/st_text"
-        android:textSize="@dimen/st_step_text"
-        app:layout_constraintBottom_toBottomOf="@+id/number_textview"
-        app:layout_constraintStart_toEndOf="@+id/number_textview"
-        app:layout_constraintTop_toTopOf="@+id/number_textview"
-        tools:text="Enlèvement"/>
-
+        app:layout_constraintEnd_toEndOf="@id/group"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/group"
+        app:layout_constraintTop_toTopOf="@id/group"
+        tools:text="1"
+        android:text="1"/>
 
     <ImageView
         android:id="@+id/imageview"
@@ -51,4 +46,4 @@
         android:src="@drawable/shape_delta"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription"/>
-</merge>
+</android.support.constraint.ConstraintLayout>

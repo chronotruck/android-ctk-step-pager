@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Step Tab -->
-    <dimen name="st_height">40dp</dimen>
-    <dimen name="st_number_text">16sp</dimen>
-    <dimen name="st_step_text">16sp</dimen>
+    <dimen name="steptab_height">40dp</dimen>
+    <dimen name="steptab_number_textsize">16sp</dimen>
+    <dimen name="steptab_title_textsize">16sp</dimen>
 </resources>
