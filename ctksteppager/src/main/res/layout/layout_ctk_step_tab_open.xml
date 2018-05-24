@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    android:id="@+id/cl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +11,7 @@
         android:id="@+id/group"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/steptab_background"
+        android:background="@color/steptab_background_open"
         app:constraint_referenced_ids="number_textview, title_textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageview"
@@ -24,11 +23,11 @@
         android:id="@+id/number_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/bg_steptab_number_active"
+        android:background="@drawable/bg_steptab_number"
         android:gravity="center"
-        android:textColor="@color/steptab_text_active"
+        android:text="1"
+        android:textColor="@color/steptab_number_textcolor"
         android:textSize="@dimen/steptab_number_textsize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/title_textview"
@@ -37,27 +36,29 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1"
-        android:text="1"/>
+        tools:text="1"/>
 
     <TextView
         android:id="@+id/title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:text="Enlèvement"
         android:textColor="@android:color/white"
         android:textSize="@dimen/steptab_title_textsize"
         app:layout_constraintBottom_toBottomOf="@+id/number_textview"
         app:layout_constraintEnd_toStartOf="@id/imageview"
         app:layout_constraintStart_toEndOf="@+id/number_textview"
-        app:layout_constraintTop_toTopOf="@+id/number_textview"
-        tools:text="Enlèvement"/>
+        app:layout_constraintTop_toTopOf="@+id/number_textview"/>
 
 
     <ImageView
         android:id="@+id/imageview"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/shape_delta"
+        android:src="@drawable/ic_arrow"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription"/>
 </android.support.constraint.ConstraintLayout>
