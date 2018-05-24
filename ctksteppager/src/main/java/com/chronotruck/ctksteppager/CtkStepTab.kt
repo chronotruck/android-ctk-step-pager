@@ -14,7 +14,14 @@ class CtkStepTab @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    var isDone = false
+    var isActive = false
+
+
     init {
-        inflate(context, R.layout.layout_ctk_step_tab, this)
+        inflate(context, R.layout.layout_ctk_step_tab_active, this)
     }
+
+
 }

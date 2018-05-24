@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="st_background">#277696</color>
-    <color name="st_text">#fff</color>
+    <color name="blue">#277696</color>
+    <color name="white">#fff</color>
+
+    <color name="steptab_background">@color/blue</color>
+    <color name="steptab_text_active">@color/white</color>
+    <color name="steptab_text_inactive">@color/blue</color>
 </resources>
