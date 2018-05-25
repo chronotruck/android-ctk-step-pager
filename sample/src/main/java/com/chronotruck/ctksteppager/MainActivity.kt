@@ -11,11 +11,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         switch_button.setOnClickListener {
-            switchStepBarState(!ctkStepTab.isOpen)
+            switchStepBarState(!tab1.isOpen)
         }
     }
 
     private fun switchStepBarState(isOpen: Boolean) {
-        ctkStepTab.isOpen = isOpen
+        tab1.isOpen = isOpen
     }
 }
