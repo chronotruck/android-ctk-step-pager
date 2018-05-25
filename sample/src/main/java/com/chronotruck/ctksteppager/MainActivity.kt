@@ -10,12 +10,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        switch_button.setOnClickListener {
-            switchStepBarState(!tab1.isOpen)
-        }
-    }
+        tab1.collapse()
 
-    private fun switchStepBarState(isOpen: Boolean) {
-        tab1.isOpen = isOpen
+        switch_button.setOnClickListener {
+            tab1.toggle()
+        }
     }
 }
