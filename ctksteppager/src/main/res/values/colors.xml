@@ -3,9 +3,10 @@
     <color name="blue">#277696</color>
     <color name="white">#fff</color>
     <color name="grey">#F4F5F5</color>
+    <color name="red">#FF00</color>
 
     <color name="steptab_background_open">@color/blue</color>
     <color name="steptab_background_close">@color/grey</color>
-    <color name="steptab_text_open">@color/white</color>
     <color name="steptab_text_close">@color/blue</color>
+    <color name="steptab_text_open">@color/blue</color>
 </resources>

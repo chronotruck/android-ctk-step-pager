@@ -5,12 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <com.chronotruck.ctksteppager.CtkStepTab
-        android:id="@+id/ctkStepTab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.chronotruck.ctksteppager.CtkStepTab
+            android:id="@+id/tab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"/>
+
+        <com.chronotruck.ctksteppager.CtkStepTab
+            android:id="@+id/tab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"/>
+
+        <com.chronotruck.ctksteppager.CtkStepTab
+            android:id="@+id/tab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/switch_button"
@@ -21,6 +42,6 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ctkStepTab"/>
+        app:layout_constraintTop_toBottomOf="@id/ll"/>
 
 </android.support.constraint.ConstraintLayout>
