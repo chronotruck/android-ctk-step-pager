@@ -1,10 +1,11 @@
 package com.chronotruck.ctksteppager
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -44,13 +45,34 @@ class CtkStepTab @JvmOverloads constructor(
 
     fun expand() {
         isActivated = true
-        (layoutParams as LinearLayout.LayoutParams).apply {
-            width = LinearLayout.LayoutParams.MATCH_PARENT
-            weight = 1f
-        }
-        setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
-        requestLayout()
-        titleTv.visibility = View.VISIBLE
+
+        ValueAnimator.ofInt(measuredWidth, Util.getDeviceScreenSize(context).x).apply {
+            duration = 1000
+            addUpdateListener {
+                layoutParams.width = it.animatedValue as Int
+                requestLayout()
+            }
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                    titleTv.visibility = VISIBLE
+
+                    (layoutParams as LinearLayout.LayoutParams).apply {
+                        width = LinearLayout.LayoutParams.MATCH_PARENT
+                        weight = 1f
+                    }
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationStart(p0: Animator?) {
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+                }
+            })
+        }.start()
     }
 
     fun collapse() {
