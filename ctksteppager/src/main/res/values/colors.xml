@@ -8,5 +8,5 @@
     <color name="steptab_background_open">@color/blue</color>
     <color name="steptab_background_close">@color/grey</color>
     <color name="steptab_text_close">@color/blue</color>
-    <color name="steptab_text_open">@color/blue</color>
+    <color name="steptab_text_open">@color/white</color>
 </resources>
