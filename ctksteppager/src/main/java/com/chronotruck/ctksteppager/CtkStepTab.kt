@@ -39,11 +39,11 @@ class CtkStepTab @JvmOverloads constructor(
         collapse()
     }
 
-    fun expand() {
+    fun expand(finalWidth: Int) {
         isActivated = true
         getWidthAnimator(
                 from = measuredWidth,
-                to = Util.getDeviceScreenSize(context).x,
+                to = finalWidth,
                 onAnimationStart = {
                     hideLabels { showLabels() }
                     setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
@@ -61,7 +61,7 @@ class CtkStepTab @JvmOverloads constructor(
     fun collapse() {
         isActivated = false
         getWidthAnimator(
-                from = Util.getDeviceScreenSize(context).x,
+                from = measuredWidth,
                 to = resources.getDimension(R.dimen.steptab_width_collapsed).toInt(),
                 onAnimationStart = {
                     (layoutParams as LinearLayout.LayoutParams).apply {
@@ -74,14 +74,6 @@ class CtkStepTab @JvmOverloads constructor(
                 onAnimationEnd = {
                 }
         ).start()
-    }
-
-    fun toggle() {
-        if (isExpanded) {
-            collapse()
-        } else {
-            expand()
-        }
     }
 
     private fun getWidthAnimator(from: Int, to: Int, onAnimationStart: () -> Unit = {}, onAnimationEnd: () -> Unit = {}): ValueAnimator {
