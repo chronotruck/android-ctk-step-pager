@@ -10,34 +10,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val expandedWidth = Util.getDeviceScreenSize(this).x - resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
-
         init()
-
-        switch_button.setOnClickListener {
-            tab1.apply {
-                if (isExpanded) {
-                    collapse()
-                    tab2.expand(expandedWidth)
-                } else {
-                    expand(expandedWidth)
-                    tab2.collapse()
-                }
-            }
-        }
     }
 
     private fun init() {
-        tab1.apply {
-            isExpanded = true
-            title = "One"
-            stepNumber = 1
-        }
-
-        tab2.apply {
-            isExpanded = false
-            title = "Two"
-            stepNumber = 2
-        }
+        viewpager.adapter = MyPagerAdapter(supportFragmentManager)
+        tablayout.setupWithViewPager(viewpager)
     }
 }
