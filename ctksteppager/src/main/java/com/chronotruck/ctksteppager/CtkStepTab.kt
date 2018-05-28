@@ -100,17 +100,17 @@ class CtkStepTab @JvmOverloads constructor(
                 requestLayout()
             }
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(p0: Animator?) {
+                override fun onAnimationRepeat(animator: Animator?) {
                 }
 
-                override fun onAnimationEnd(p0: Animator?) {
+                override fun onAnimationEnd(animator: Animator?) {
                     onAnimationEnd.invoke()
                 }
 
-                override fun onAnimationCancel(p0: Animator?) {
+                override fun onAnimationCancel(animator: Animator?) {
                 }
 
-                override fun onAnimationStart(p0: Animator?) {
+                override fun onAnimationStart(animator: Animator?) {
                     onAnimationStart.invoke()
                 }
             })
@@ -125,19 +125,19 @@ class CtkStepTab @JvmOverloads constructor(
                 badgeTv.alpha = it.animatedValue as Float
             }
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(p0: Animator?) {
+                override fun onAnimationRepeat(animator: Animator?) {
                 }
 
-                override fun onAnimationEnd(p0: Animator?) {
+                override fun onAnimationEnd(animator: Animator?) {
                     titleTv.visibility = View.GONE
                     badgeTv.visibility = View.GONE
                     onAnimationEnd.invoke()
                 }
 
-                override fun onAnimationCancel(p0: Animator?) {
+                override fun onAnimationCancel(animator: Animator?) {
                 }
 
-                override fun onAnimationStart(p0: Animator?) {
+                override fun onAnimationStart(animator: Animator?) {
                 }
             })
         }.start()
@@ -150,16 +150,16 @@ class CtkStepTab @JvmOverloads constructor(
                 badgeTv.alpha = it.animatedValue as Float
             }
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(p0: Animator?) {
+                override fun onAnimationRepeat(animator: Animator?) {
                 }
 
-                override fun onAnimationEnd(p0: Animator?) {
+                override fun onAnimationEnd(animator: Animator?) {
                 }
 
-                override fun onAnimationCancel(p0: Animator?) {
+                override fun onAnimationCancel(animator: Animator?) {
                 }
 
-                override fun onAnimationStart(p0: Animator?) {
+                override fun onAnimationStart(animator: Animator?) {
                     titleTv.visibility = View.VISIBLE
                     badgeTv.visibility = View.VISIBLE
                 }
@@ -173,16 +173,16 @@ class CtkStepTab @JvmOverloads constructor(
                 badgeTv.alpha = it.animatedValue as Float
             }
             addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(p0: Animator?) {
+                override fun onAnimationRepeat(animator: Animator?) {
                 }
 
-                override fun onAnimationEnd(p0: Animator?) {
+                override fun onAnimationEnd(animator: Animator?) {
                 }
 
-                override fun onAnimationCancel(p0: Animator?) {
+                override fun onAnimationCancel(animator: Animator?) {
                 }
 
-                override fun onAnimationStart(p0: Animator?) {
+                override fun onAnimationStart(animator: Animator?) {
                     badgeTv.visibility = View.VISIBLE
                 }
             })
