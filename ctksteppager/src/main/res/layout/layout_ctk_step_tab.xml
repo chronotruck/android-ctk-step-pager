@@ -11,7 +11,7 @@
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <TextView
-        android:id="@+id/number_textview"
+        android:id="@+id/badge_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -40,13 +40,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Enlèvement"
+        android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="@dimen/steptab_title_textsize"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/number_textview"
+        app:layout_constraintStart_toEndOf="@+id/badge_textview"
         app:layout_constraintTop_toTopOf="parent"/>
 
 </merge>
