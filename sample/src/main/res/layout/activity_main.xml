@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#000"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -16,6 +16,11 @@
 
         <com.chronotruck.ctksteppager.CtkStepTab
             android:id="@+id/tab1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.chronotruck.ctksteppager.CtkStepTab
+            android:id="@+id/tab2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

@@ -25,7 +25,24 @@ class CtkStepTab @JvmOverloads constructor(
     private val titleTv: TextView
     private val badgeTv: TextView
 
-    val isExpanded get() = isActivated
+    var isExpanded
+        get() = isActivated
+        set(value) {
+            isActivated = value
+            if (value) {
+                setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+                (layoutParams as LinearLayout.LayoutParams).apply {
+                    width = LinearLayout.LayoutParams.MATCH_PARENT
+                    weight = 1f
+                }
+            } else {
+                (layoutParams as LinearLayout.LayoutParams).apply {
+                    width = LinearLayout.LayoutParams.WRAP_CONTENT
+                    weight = 0f
+                }
+                setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
+            }
+        }
 
     init {
         inflate(context, R.layout.layout_ctk_step_tab, this)
@@ -36,7 +53,6 @@ class CtkStepTab @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         layoutParams.height = resources.getDimension(R.dimen.steptab_height).toInt()
-        collapse()
     }
 
     fun expand(finalWidth: Int) {
