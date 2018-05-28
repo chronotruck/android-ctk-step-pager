@@ -43,10 +43,7 @@ class CtkStepTab @JvmOverloads constructor(
                     weight = 1f
                 }
             } else {
-                (layoutParams as LinearLayout.LayoutParams).apply {
-                    width = LinearLayout.LayoutParams.WRAP_CONTENT
-                    weight = 0f
-                }
+                (layoutParams as LinearLayout.LayoutParams).width = LinearLayout.LayoutParams.WRAP_CONTENT
                 setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
             }
         }
@@ -84,10 +81,7 @@ class CtkStepTab @JvmOverloads constructor(
                     setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
                 },
                 onAnimationEnd = {
-                    (layoutParams as LinearLayout.LayoutParams).apply {
-                        width = LinearLayout.LayoutParams.MATCH_PARENT
-                        weight = 1f
-                    }
+                    (layoutParams as LinearLayout.LayoutParams).width = finalWidth
                 }
         ).start()
     }
@@ -99,14 +93,9 @@ class CtkStepTab @JvmOverloads constructor(
                 from = measuredWidth,
                 to = resources.getDimension(R.dimen.steptab_width_collapsed).toInt(),
                 onAnimationStart = {
-                    (layoutParams as LinearLayout.LayoutParams).apply {
-                        width = LinearLayout.LayoutParams.WRAP_CONTENT
-                        weight = 0f
-                    }
+                    (layoutParams as LinearLayout.LayoutParams).width = LinearLayout.LayoutParams.WRAP_CONTENT
                     hideLabels { showBadge() }
                     setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
-                },
-                onAnimationEnd = {
                 }
         ).start()
     }
