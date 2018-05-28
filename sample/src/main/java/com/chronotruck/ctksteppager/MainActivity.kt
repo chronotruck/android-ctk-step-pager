@@ -13,7 +13,13 @@ class MainActivity : AppCompatActivity() {
         tab1.collapse()
 
         switch_button.setOnClickListener {
-            tab1.toggle()
+            tab1.apply {
+                if (isExpanded) {
+                    collapse()
+                } else {
+                    expand(Util.getDeviceScreenSize(context).x)
+                }
+            }
         }
     }
 }
