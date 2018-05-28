@@ -28,7 +28,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     @Suppress("PrivatePropertyName")
     private val EXPANDED_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x - tabCount!!) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
+        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
 
     init {
         orientation = LinearLayout.HORIZONTAL
