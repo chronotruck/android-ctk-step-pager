@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        viewpager.adapter = MyPagerAdapter(supportFragmentManager)
-        tablayout.setupWithViewPager(viewpager)
+        steppager.adapter = MyPagerAdapter(supportFragmentManager)
     }
 }
