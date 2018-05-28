@@ -10,14 +10,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tab1.collapse()
+        val expandedWidth = Util.getDeviceScreenSize(this).x - resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
+
+        //init
+        tab1.isExpanded = true
+        tab2.isExpanded = false
 
         switch_button.setOnClickListener {
             tab1.apply {
                 if (isExpanded) {
                     collapse()
+                    tab2.expand(expandedWidth)
                 } else {
-                    expand(Util.getDeviceScreenSize(context).x)
+                    expand(expandedWidth)
+                    tab2.collapse()
                 }
             }
         }
