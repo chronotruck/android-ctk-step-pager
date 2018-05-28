@@ -44,6 +44,18 @@ class CtkStepTab @JvmOverloads constructor(
             }
         }
 
+    var title: String
+        set(value) {
+            titleTv.text = value
+        }
+        get() = titleTv.text.toString()
+
+    var stepNumber: Int
+        set(value) {
+            badgeTv.text = value.toString()
+        }
+        get() = badgeTv.text.toString().toInt()
+
     init {
         inflate(context, R.layout.layout_ctk_step_tab, this)
         titleTv = findViewById(R.id.title_textview)

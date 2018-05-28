@@ -12,9 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val expandedWidth = Util.getDeviceScreenSize(this).x - resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
 
-        //init
-        tab1.isExpanded = true
-        tab2.isExpanded = false
+        init()
 
         switch_button.setOnClickListener {
             tab1.apply {
@@ -26,6 +24,20 @@ class MainActivity : AppCompatActivity() {
                     tab2.collapse()
                 }
             }
+        }
+    }
+
+    private fun init() {
+        tab1.apply {
+            isExpanded = true
+            title = "One"
+            stepNumber = 1
+        }
+
+        tab2.apply {
+            isExpanded = false
+            title = "Two"
+            stepNumber = 2
         }
     }
 }
