@@ -39,6 +39,43 @@ class CtkStepTab @JvmOverloads constructor(
         collapse()
     }
 
+    fun expand() {
+        isActivated = true
+        getWidthAnimator(
+                from = measuredWidth,
+                to = Util.getDeviceScreenSize(context).x,
+                onAnimationStart = {
+                    hideLabels { showLabels() }
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+                },
+                onAnimationEnd = {
+                    (layoutParams as LinearLayout.LayoutParams).apply {
+                        width = LinearLayout.LayoutParams.MATCH_PARENT
+                        weight = 1f
+                    }
+                }
+        ).start()
+    }
+
+
+    fun collapse() {
+        isActivated = false
+        getWidthAnimator(
+                from = Util.getDeviceScreenSize(context).x,
+                to = resources.getDimension(R.dimen.steptab_width_collapsed).toInt(),
+                onAnimationStart = {
+                    (layoutParams as LinearLayout.LayoutParams).apply {
+                        width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        weight = 0f
+                    }
+                    hideLabels { showBadge() }
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
+                },
+                onAnimationEnd = {
+                }
+        ).start()
+    }
+
     fun toggle() {
         if (isExpanded) {
             collapse()
@@ -47,10 +84,8 @@ class CtkStepTab @JvmOverloads constructor(
         }
     }
 
-    fun expand() {
-        isActivated = true
-
-        ValueAnimator.ofInt(measuredWidth, Util.getDeviceScreenSize(context).x).apply {
+    private fun getWidthAnimator(from: Int, to: Int, onAnimationStart: () -> Unit = {}, onAnimationEnd: () -> Unit = {}): ValueAnimator {
+        return ValueAnimator.ofInt(from, to).apply {
             interpolator = DecelerateInterpolator()
             addUpdateListener {
                 layoutParams.width = it.animatedValue as Int
@@ -61,21 +96,17 @@ class CtkStepTab @JvmOverloads constructor(
                 }
 
                 override fun onAnimationEnd(p0: Animator?) {
-                    (layoutParams as LinearLayout.LayoutParams).apply {
-                        width = LinearLayout.LayoutParams.MATCH_PARENT
-                        weight = 1f
-                    }
+                    onAnimationEnd.invoke()
                 }
 
                 override fun onAnimationCancel(p0: Animator?) {
                 }
 
                 override fun onAnimationStart(p0: Animator?) {
-                    hideLabels { showLabels() }
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+                    onAnimationStart.invoke()
                 }
             })
-        }.start()
+        }
     }
 
     private fun hideLabels(onAnimationEnd: () -> Unit) {
@@ -128,14 +159,25 @@ class CtkStepTab @JvmOverloads constructor(
         }.start()
     }
 
-    fun collapse() {
-        isActivated = false
-        (layoutParams as LinearLayout.LayoutParams).apply {
-            width = LinearLayout.LayoutParams.WRAP_CONTENT
-            weight = 0f
-        }
-        setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
-        requestLayout()
-        titleTv.visibility = GONE
+    private fun showBadge() {
+        ValueAnimator.ofFloat(0f, 1f).apply {
+            addUpdateListener {
+                badgeTv.alpha = it.animatedValue as Float
+            }
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationStart(p0: Animator?) {
+                    badgeTv.visibility = View.VISIBLE
+                }
+            })
+        }.start()
     }
 }
