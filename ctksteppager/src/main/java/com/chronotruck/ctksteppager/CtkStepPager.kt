@@ -16,6 +16,6 @@ class CtkStepPager @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     init {
-        inflate(context, R.layout.layout_ctk_step_pager, this)
+        inflate(context, R.layout.view_ctk_step_pager, this)
     }
 }

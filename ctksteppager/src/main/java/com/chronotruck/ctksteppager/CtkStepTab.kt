@@ -29,6 +29,13 @@ class CtkStepTab @JvmOverloads constructor(
         get() = isActivated
         set(value) {
             isActivated = value
+            if (layoutParams == null) {
+                layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        resources.getDimension(R.dimen.steptab_height).toInt(),
+                        0f
+                )
+            }
             if (value) {
                 setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
                 (layoutParams as LinearLayout.LayoutParams).apply {
@@ -57,7 +64,7 @@ class CtkStepTab @JvmOverloads constructor(
         get() = badgeTv.text.toString().toInt()
 
     init {
-        inflate(context, R.layout.layout_ctk_step_tab, this)
+        inflate(context, R.layout.view_ctk_step_tab, this)
         titleTv = findViewById(R.id.title_textview)
         badgeTv = findViewById(R.id.badge_textview)
     }
