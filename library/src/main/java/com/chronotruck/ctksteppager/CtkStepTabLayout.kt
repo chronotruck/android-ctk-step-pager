@@ -25,6 +25,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
     private val EXPANDED_TAB_WIDTH: Int
         get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
 
+    private val EQUITABLE_TAB_WIDTH: Int
+        get() = (Util.getDeviceScreenSize(context!!).x) / tabCount!!
 
     val tabs = LinkedList<CtkStepTab>()
 
@@ -52,6 +54,9 @@ class CtkStepTabLayout @JvmOverloads constructor(
     fun doneStepTabUntil(endPositionInclusive: Int) {
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
+            if (endPositionInclusive == tabCount!! - 1) {
+                tabs[it].expand(EQUITABLE_TAB_WIDTH)
+            }
         }
     }
 
