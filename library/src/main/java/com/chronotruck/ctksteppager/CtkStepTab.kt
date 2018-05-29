@@ -3,8 +3,10 @@ package com.chronotruck.ctksteppager
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -26,6 +28,12 @@ class CtkStepTab @JvmOverloads constructor(
     private val titleTv: TextView
     private val badgeTv: TextView
     private val doneIv: ImageView
+
+    var settings = Settings(this)
+        set(value) {
+            field = value
+            update()
+        }
 
     var isExpanded: Boolean
         get() = isActivated
@@ -65,11 +73,33 @@ class CtkStepTab @JvmOverloads constructor(
         }
         get() = badgeTv.text.toString().toInt()
 
+
     init {
         inflate(context, R.layout.view_ctk_step_tab, this)
+
         titleTv = findViewById(R.id.title_textview)
         badgeTv = findViewById(R.id.badge_textview)
         doneIv = findViewById(R.id.done_imageview)
+
+        settings.init(context!!, attrs)
+
+        update()
+    }
+
+    fun update() {
+        val textColorStateList = ColorStateList(
+                arrayOf(
+                        intArrayOf(android.R.attr.state_activated),
+                        intArrayOf(-android.R.attr.state_activated)
+                ),
+                intArrayOf(
+                        settings.activeTextColor,
+                        settings.inactiveTextColor
+                )
+        )
+        titleTv.setTextColor(textColorStateList)
+        badgeTv.setTextColor(textColorStateList)
+        DrawableCompat.setTint(doneIv.drawable, settings.doneIconColor)
     }
 
     override fun onAttachedToWindow() {
@@ -94,16 +124,6 @@ class CtkStepTab @JvmOverloads constructor(
         ).start()
     }
 
-    private fun showExpandedBackground() {
-        if (isDone) return
-        setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
-    }
-
-    private fun showCollapsedBackground() {
-        if (isDone) return
-        setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
-    }
-
     fun collapse() {
         isActivated = false
         getWidthAnimator(
@@ -122,7 +142,7 @@ class CtkStepTab @JvmOverloads constructor(
     fun done() {
         if (isDone) return
         isDone = true
-        setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+        setBackgroundColor(settings.doneTabColorBackground)
         hideLabels { showDoneLabel() }
     }
 
@@ -134,6 +154,16 @@ class CtkStepTab @JvmOverloads constructor(
         } else {
             collapse()
         }
+    }
+
+    private fun showExpandedBackground() {
+        if (isDone) return
+        setBackgroundColor(settings.activeTabColorBackground)
+    }
+
+    private fun showCollapsedBackground() {
+        if (isDone) return
+        setBackgroundColor(settings.inactiveTabColorBackground)
     }
 
     private fun getWidthAnimator(from: Int, to: Int, onAnimationStart: () -> Unit = {}, onAnimationEnd: () -> Unit = {}): ValueAnimator {
@@ -276,5 +306,52 @@ class CtkStepTab @JvmOverloads constructor(
                 }
             })
         }.start()
+    }
+
+    class Settings(private val view: CtkStepTab) {
+        var activeTabColorBackground: Int = Color.parseColor("#277696")
+            set(value) {
+                field = value
+                view.update()
+            }
+        var inactiveTabColorBackground: Int = Color.parseColor("#F4F5F5")
+            set(value) {
+                field = value
+                view.update()
+            }
+        var doneTabColorBackground: Int = Color.parseColor("#96BF31")
+            set(value) {
+                field = value
+                view.update()
+            }
+        var activeTextColor: Int = Color.parseColor("#FFFFFF")
+            set(value) {
+                field = value
+                view.update()
+            }
+        var inactiveTextColor: Int = Color.parseColor("#277696")
+            set(value) {
+                field = value
+                view.update()
+            }
+        var doneIconColor: Int = doneTabColorBackground
+            set(value) {
+                field = value
+                view.update()
+            }
+
+        fun init(context: Context, attrs: AttributeSet?) {
+            attrs?.let {
+                context.obtainStyledAttributes(attrs, R.styleable.CtkStepTab).let {
+                    activeTabColorBackground = it.getColor(R.styleable.CtkStepTab_activeTabBackgroundColor, activeTabColorBackground)
+                    inactiveTabColorBackground = it.getColor(R.styleable.CtkStepTab_inactiveTabBackgroundColor, inactiveTabColorBackground)
+                    doneTabColorBackground = it.getColor(R.styleable.CtkStepTab_doneTabBackgroundColor, doneTabColorBackground)
+                    activeTextColor = it.getColor(R.styleable.CtkStepTab_activeTextColor, activeTextColor)
+                    inactiveTextColor = it.getColor(R.styleable.CtkStepTab_inactiveTextColor, inactiveTextColor)
+                    doneIconColor = it.getColor(R.styleable.CtkStepTab_doneIconColor, doneIconColor)
+                    it.recycle()
+                }
+            }
+        }
     }
 }
