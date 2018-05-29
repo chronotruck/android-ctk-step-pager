@@ -28,10 +28,18 @@ class CtkStepPager @JvmOverloads constructor(
             stepTabLayout.setupWithViewPager(viewPager)
         }
 
+    fun doneCurrentStepTab() {
+        stepTabLayout.doneCurrentStepTab()
+    }
+
+    fun doneStepTabUntil(endPositionInclusive: Int) {
+        stepTabLayout.doneStepTabUntil(endPositionInclusive)
+    }
+
     init {
         inflate(context, R.layout.view_ctk_step_pager, this)
         orientation = VERTICAL
-        
+
         viewPager = findViewById(R.id.viewpager)
         stepTabLayout = findViewById(R.id.tablayout)
     }

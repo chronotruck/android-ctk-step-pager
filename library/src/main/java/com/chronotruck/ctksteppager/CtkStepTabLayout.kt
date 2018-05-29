@@ -19,16 +19,17 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     private var viewPager: ViewPager? = null
 
-    val tabs = LinkedList<CtkStepTab>()
-
     private lateinit var selectedTab: CtkStepTab
-
-    val tabCount: Int?
-        get() = viewPager?.adapter?.count
 
     @Suppress("PrivatePropertyName")
     private val EXPANDED_TAB_WIDTH: Int
         get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
+
+
+    val tabs = LinkedList<CtkStepTab>()
+
+    val tabCount: Int?
+        get() = viewPager?.adapter?.count
 
     init {
         orientation = LinearLayout.HORIZONTAL
@@ -42,6 +43,16 @@ class CtkStepTabLayout @JvmOverloads constructor(
         super.onAttachedToWindow()
 
         init()
+    }
+
+    fun doneCurrentStepTab() {
+        doneStepTabUntil(viewPager!!.currentItem)
+    }
+
+    fun doneStepTabUntil(endPositionInclusive: Int) {
+        IntRange(0, endPositionInclusive).forEach {
+            tabs[it].done()
+        }
     }
 
     private fun init() {
@@ -62,6 +73,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
         viewPager!!.addOnPageChangeListener(this)
     }
+
 
     override fun onPageScrollStateChanged(state: Int) {
     }

@@ -15,5 +15,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         steppager.adapter = MyPagerAdapter(supportFragmentManager)
+
+        done_button.setOnClickListener {
+            steppager.doneCurrentStepTab()
+        }
     }
 }
