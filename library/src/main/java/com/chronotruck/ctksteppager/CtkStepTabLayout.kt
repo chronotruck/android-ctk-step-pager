@@ -55,6 +55,12 @@ class CtkStepTabLayout @JvmOverloads constructor(
         }
     }
 
+    fun resetAllStepTabs(){
+        for (tab in tabs){
+            tab.undone()
+        }
+    }
+
     private fun init() {
         viewPager!!.adapter?.let {
             var tab: CtkStepTab

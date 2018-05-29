@@ -126,6 +126,16 @@ class CtkStepTab @JvmOverloads constructor(
         hideLabels { showDoneLabel() }
     }
 
+    fun undone() {
+        isDone = false
+        hideDoneLabel()
+        if (isExpanded) {
+            expand(measuredWidth)
+        } else {
+            collapse()
+        }
+    }
+
     private fun getWidthAnimator(from: Int, to: Int, onAnimationStart: () -> Unit = {}, onAnimationEnd: () -> Unit = {}): ValueAnimator {
         return ValueAnimator.ofInt(from, to).apply {
             interpolator = DecelerateInterpolator()
@@ -195,6 +205,28 @@ class CtkStepTab @JvmOverloads constructor(
 
                 override fun onAnimationStart(animator: Animator?) {
                     doneIv.visibility = View.VISIBLE
+                }
+            })
+        }.start()
+    }
+
+    private fun hideDoneLabel() {
+        ValueAnimator.ofFloat(1f, 0f).apply {
+            addUpdateListener {
+                doneIv.alpha = it.animatedValue as Float
+            }
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animator: Animator?) {
+                }
+
+                override fun onAnimationEnd(animator: Animator?) {
+                    doneIv.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(animator: Animator?) {
+                }
+
+                override fun onAnimationStart(animator: Animator?) {
                 }
             })
         }.start()

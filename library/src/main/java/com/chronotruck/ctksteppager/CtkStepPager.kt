@@ -36,6 +36,10 @@ class CtkStepPager @JvmOverloads constructor(
         stepTabLayout.doneStepTabUntil(endPositionInclusive)
     }
 
+    fun resetAllStepTabs(){
+        stepTabLayout.resetAllStepTabs()
+    }
+
     init {
         inflate(context, R.layout.view_ctk_step_pager, this)
         orientation = VERTICAL
