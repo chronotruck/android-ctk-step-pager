@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import java.util.*
 
+@Suppress("PrivatePropertyName")
 /**
  * @Author McGalanes
  * @Email melwin.magalhaes@gmail.com
@@ -21,7 +22,6 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     private lateinit var selectedTab: CtkStepTab
 
-    @Suppress("PrivatePropertyName")
     private val EXPANDED_TAB_WIDTH: Int
         get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
 
@@ -39,11 +39,6 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     fun setupWithViewPager(viewPager: ViewPager) {
         this.viewPager = viewPager
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
         init()
     }
 
