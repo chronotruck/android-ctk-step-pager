@@ -1,4 +1,4 @@
-package com.chronotruck.ctksteppager
+package com.chronotruck.ctksteppager.sample
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

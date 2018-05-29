@@ -1,4 +1,4 @@
-package com.chronotruck.ctksteppager
+package com.chronotruck.ctksteppager.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
