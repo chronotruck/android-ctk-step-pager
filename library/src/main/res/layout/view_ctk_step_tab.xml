@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl"
     android:layout_width="wrap_content"
-    android:layout_height="300dp"
-    android:background="@color/blue"
-    tools:background="@color/red"
+    android:layout_height="@dimen/steptab_height"
+    tools:background="@android:color/holo_green_light"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <TextView
@@ -40,13 +39,26 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Enlèvement"
-        android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="@dimen/steptab_title_textsize"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/badge_textview"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/done_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_steptab_ic_done"
+        android:src="@drawable/ic_steptab_step_done"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
 </merge>

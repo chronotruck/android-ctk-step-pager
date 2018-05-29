@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import java.util.*
 
+@Suppress("PrivatePropertyName")
 /**
  * @Author McGalanes
  * @Email melwin.magalhaes@gmail.com
@@ -19,16 +20,18 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     private var viewPager: ViewPager? = null
 
-    val tabs = LinkedList<CtkStepTab>()
-
     private lateinit var selectedTab: CtkStepTab
+
+    private val EXPANDED_TAB_WIDTH: Int
+        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
+
+    private val EQUITABLE_TAB_WIDTH: Int
+        get() = (Util.getDeviceScreenSize(context!!).x) / tabCount!!
+
+    val tabs = LinkedList<CtkStepTab>()
 
     val tabCount: Int?
         get() = viewPager?.adapter?.count
-
-    @Suppress("PrivatePropertyName")
-    private val EXPANDED_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
 
     init {
         orientation = LinearLayout.HORIZONTAL
@@ -36,12 +39,26 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     fun setupWithViewPager(viewPager: ViewPager) {
         this.viewPager = viewPager
+        init()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    fun doneCurrentStepTab() {
+        doneStepTabUntil(viewPager!!.currentItem)
+    }
 
-        init()
+    fun doneStepTabUntil(endPositionInclusive: Int) {
+        IntRange(0, endPositionInclusive).forEach {
+            tabs[it].done()
+            if (endPositionInclusive == tabCount!! - 1) {
+                tabs[it].expand(EQUITABLE_TAB_WIDTH)
+            }
+        }
+    }
+
+    fun resetAllStepTabs(){
+        for (tab in tabs){
+            tab.undone()
+        }
     }
 
     private fun init() {
@@ -62,6 +79,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
         viewPager!!.addOnPageChangeListener(this)
     }
+
 
     override fun onPageScrollStateChanged(state: Int) {
     }

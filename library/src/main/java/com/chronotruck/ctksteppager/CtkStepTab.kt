@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -24,8 +25,9 @@ class CtkStepTab @JvmOverloads constructor(
 
     private val titleTv: TextView
     private val badgeTv: TextView
+    private val doneIv: ImageView
 
-    var isExpanded
+    var isExpanded: Boolean
         get() = isActivated
         set(value) {
             isActivated = value
@@ -37,16 +39,19 @@ class CtkStepTab @JvmOverloads constructor(
                 )
             }
             if (value) {
-                setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
                 (layoutParams as LinearLayout.LayoutParams).apply {
                     width = LinearLayout.LayoutParams.MATCH_PARENT
                     weight = 1f
                 }
+                showExpandedBackground()
             } else {
                 (layoutParams as LinearLayout.LayoutParams).width = LinearLayout.LayoutParams.WRAP_CONTENT
-                setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
+                showCollapsedBackground()
             }
         }
+
+    var isDone: Boolean = false
+        private set
 
     var title: String
         set(value) {
@@ -64,6 +69,7 @@ class CtkStepTab @JvmOverloads constructor(
         inflate(context, R.layout.view_ctk_step_tab, this)
         titleTv = findViewById(R.id.title_textview)
         badgeTv = findViewById(R.id.badge_textview)
+        doneIv = findViewById(R.id.done_imageview)
     }
 
     override fun onAttachedToWindow() {
@@ -77,8 +83,10 @@ class CtkStepTab @JvmOverloads constructor(
                 from = measuredWidth,
                 to = finalWidth,
                 onAnimationStart = {
-                    hideLabels { showLabels() }
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+                    if (!isDone) {
+                        hideLabels { showLabels() }
+                    }
+                    showExpandedBackground()
                 },
                 onAnimationEnd = {
                     (layoutParams as LinearLayout.LayoutParams).width = finalWidth
@@ -86,6 +94,15 @@ class CtkStepTab @JvmOverloads constructor(
         ).start()
     }
 
+    private fun showExpandedBackground() {
+        if (isDone) return
+        setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+    }
+
+    private fun showCollapsedBackground() {
+        if (isDone) return
+        setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
+    }
 
     fun collapse() {
         isActivated = false
@@ -94,10 +111,29 @@ class CtkStepTab @JvmOverloads constructor(
                 to = resources.getDimension(R.dimen.steptab_width_collapsed).toInt(),
                 onAnimationStart = {
                     (layoutParams as LinearLayout.LayoutParams).width = LinearLayout.LayoutParams.WRAP_CONTENT
-                    hideLabels { showBadge() }
-                    setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
+                    if (!isDone) {
+                        hideLabels { showBadge() }
+                        showCollapsedBackground()
+                    }
                 }
         ).start()
+    }
+
+    fun done() {
+        if (isDone) return
+        isDone = true
+        setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+        hideLabels { showDoneLabel() }
+    }
+
+    fun undone() {
+        isDone = false
+        hideDoneLabel()
+        if (isExpanded) {
+            expand(measuredWidth)
+        } else {
+            collapse()
+        }
     }
 
     private fun getWidthAnimator(from: Int, to: Int, onAnimationStart: () -> Unit = {}, onAnimationEnd: () -> Unit = {}): ValueAnimator {
@@ -119,6 +155,7 @@ class CtkStepTab @JvmOverloads constructor(
                 }
 
                 override fun onAnimationStart(animator: Animator?) {
+                    showExpandedBackground()
                     onAnimationStart.invoke()
                 }
             })
@@ -140,6 +177,50 @@ class CtkStepTab @JvmOverloads constructor(
                     titleTv.visibility = View.GONE
                     badgeTv.visibility = View.GONE
                     onAnimationEnd.invoke()
+                }
+
+                override fun onAnimationCancel(animator: Animator?) {
+                }
+
+                override fun onAnimationStart(animator: Animator?) {
+                }
+            })
+        }.start()
+    }
+
+    private fun showDoneLabel() {
+        ValueAnimator.ofFloat(0f, 1f).apply {
+            addUpdateListener {
+                doneIv.alpha = it.animatedValue as Float
+            }
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animator: Animator?) {
+                }
+
+                override fun onAnimationEnd(animator: Animator?) {
+                }
+
+                override fun onAnimationCancel(animator: Animator?) {
+                }
+
+                override fun onAnimationStart(animator: Animator?) {
+                    doneIv.visibility = View.VISIBLE
+                }
+            })
+        }.start()
+    }
+
+    private fun hideDoneLabel() {
+        ValueAnimator.ofFloat(1f, 0f).apply {
+            addUpdateListener {
+                doneIv.alpha = it.animatedValue as Float
+            }
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animator: Animator?) {
+                }
+
+                override fun onAnimationEnd(animator: Animator?) {
+                    doneIv.visibility = View.GONE
                 }
 
                 override fun onAnimationCancel(animator: Animator?) {
