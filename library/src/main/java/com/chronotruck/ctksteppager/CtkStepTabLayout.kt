@@ -1,8 +1,12 @@
 package com.chronotruck.ctksteppager
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageView
 import android.widget.LinearLayout
 import java.util.*
 
@@ -55,8 +59,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
         }
     }
 
-    fun resetAllStepTabs(){
-        for (tab in tabs){
+    fun resetAllStepTabs() {
+        for (tab in tabs) {
             tab.undone()
         }
     }
@@ -72,7 +76,22 @@ class CtkStepTabLayout @JvmOverloads constructor(
                 tab.isExpanded = false
                 tabs.add(tab)
                 addView(tab)
+
+                if (i != it.count - 1) {
+                    val separator = ImageView(context).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                                WRAP_CONTENT,
+                                MATCH_PARENT,
+                                0f
+                        )
+                        adjustViewBounds = true
+                        setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_arrow))
+                        scaleType = ImageView.ScaleType.FIT_XY
+                    }
+                    addView(separator)
+                }
             }
+
             selectedTab = tabs[this.viewPager!!.currentItem]
             selectedTab.isExpanded = true
         }
