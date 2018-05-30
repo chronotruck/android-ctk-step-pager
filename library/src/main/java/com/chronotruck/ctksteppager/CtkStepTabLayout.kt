@@ -26,16 +26,20 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     private lateinit var selectedTab: CtkStepTab
 
+    private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
+
+    private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
+
     private val EXPANDED_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
+        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
 
     private val EQUITABLE_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) / tabCount!!
+        get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
 
     val tabs = LinkedList<CtkStepTab>()
 
-    val tabCount: Int?
-        get() = viewPager?.adapter?.count
+    val tabCount: Int
+        get() = viewPager!!.adapter!!.count
 
     init {
         orientation = LinearLayout.HORIZONTAL
@@ -53,7 +57,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
     fun doneStepTabUntil(endPositionInclusive: Int) {
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
-            if (endPositionInclusive == tabCount!! - 1) {
+            if (endPositionInclusive == tabCount - 1) {
                 tabs[it].expand(EQUITABLE_TAB_WIDTH)
             }
         }
@@ -84,9 +88,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
                                 MATCH_PARENT,
                                 0f
                         )
-                        adjustViewBounds = true
                         setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_arrow))
-                        scaleType = ImageView.ScaleType.FIT_XY
                     }
                     addView(separator)
                 }
