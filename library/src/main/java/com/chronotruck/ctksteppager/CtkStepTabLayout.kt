@@ -61,6 +61,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
         for (tab in tabs) {
             tab.undone()
         }
+        invalidateSeparators()
     }
 
     private fun init() {
