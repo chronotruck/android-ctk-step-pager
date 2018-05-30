@@ -2,6 +2,7 @@
 <resources>
     <!-- Step Tab -->
     <dimen name="steptab_height">40dp</dimen>
+    <dimen name="steptablayout_triangle_separator_width">12dp</dimen>
     <dimen name="steptab_width_collapsed">56dp</dimen>
     <dimen name="steptab_number_textsize">16sp</dimen>
     <dimen name="steptab_title_textsize">16sp</dimen>

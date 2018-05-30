@@ -1,8 +1,13 @@
 package com.chronotruck.ctksteppager
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import java.util.*
 
@@ -18,20 +23,16 @@ class CtkStepTabLayout @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
 
-    private var viewPager: ViewPager? = null
+    private val settings: Settings = Settings()
 
+    private var viewPager: ViewPager? = null
     private lateinit var selectedTab: CtkStepTab
 
-    private val EXPANDED_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount!! - 1) * (resources.getDimension(R.dimen.steptab_width_collapsed).toInt())
-
-    private val EQUITABLE_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) / tabCount!!
-
     val tabs = LinkedList<CtkStepTab>()
+    val separators = LinkedList<ImageView>()
 
-    val tabCount: Int?
-        get() = viewPager?.adapter?.count
+    val tabCount: Int
+        get() = viewPager!!.adapter!!.count
 
     init {
         orientation = LinearLayout.HORIZONTAL
@@ -49,37 +50,93 @@ class CtkStepTabLayout @JvmOverloads constructor(
     fun doneStepTabUntil(endPositionInclusive: Int) {
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
-            if (endPositionInclusive == tabCount!! - 1) {
-                tabs[it].expand(EQUITABLE_TAB_WIDTH)
+            if (endPositionInclusive == tabCount - 1) {
+                tabs[it].expand(settings.EQUITABLE_TAB_WIDTH)
             }
         }
+        invalidateSeparators()
     }
 
-    fun resetAllStepTabs(){
-        for (tab in tabs){
+    fun resetAllStepTabs() {
+        for (tab in tabs) {
             tab.undone()
         }
+        invalidateSeparators()
     }
 
     private fun init() {
         viewPager!!.adapter?.let {
             var tab: CtkStepTab
             for (i in 0 until it.count) {
-                tab = CtkStepTab(context).apply {
-                    title = it.getPageTitle(i).toString()
-                    stepNumber = i + 1
-                }
-                tab.isExpanded = false
+                tab = createTab(it.getPageTitle(i), i + 1)
                 tabs.add(tab)
                 addView(tab)
+
+                if (i != it.count - 1) {
+                    val separator = createSeparator()
+                    separators.add(separator)
+                    addView(separator)
+                }
             }
-            selectedTab = tabs[this.viewPager!!.currentItem]
+
+            val currentItemPosition = this.viewPager!!.currentItem
+            selectedTab = tabs[currentItemPosition]
             selectedTab.isExpanded = true
+
+            invalidateSeparator(
+                    separators[currentItemPosition],
+                    ContextCompat.getColor(context, R.color.blue),
+                    ContextCompat.getColor(context, R.color.grey)
+            )
         }
 
         viewPager!!.addOnPageChangeListener(this)
     }
 
+    private fun createTab(title: CharSequence?, stepNumber: Int): CtkStepTab {
+        return CtkStepTab(context).apply {
+            this.title = title.toString()
+            this.stepNumber = stepNumber
+            this.isExpanded = false
+        }
+    }
+
+    private fun createSeparator(): ImageView {
+        return ImageView(context).apply {
+            this.layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    0f
+            )
+
+            invalidateSeparator(
+                    this,
+                    ContextCompat.getColor(context, R.color.grey),
+                    ContextCompat.getColor(context, R.color.grey)
+            )
+        }
+    }
+
+    private fun invalidateSeparator(separator: ImageView, leftItemBackgroundColor: Int, rightItemBackgroundColor: Int) {
+        val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.ic_arrow)!!)
+        drawable.mutate()
+        DrawableCompat.setTint(drawable, leftItemBackgroundColor)
+
+        separator.apply {
+            this.setImageDrawable(drawable)
+            this.setBackgroundColor(rightItemBackgroundColor)
+        }
+    }
+
+    private fun invalidateSeparators() {
+        for (i in 0 until tabs.size - 1) {
+            invalidateSeparator(
+                    separators[i],
+                    (tabs[i].background as ColorDrawable).color,
+                    (tabs[i + 1].background as ColorDrawable).color
+            )
+        }
+    }
 
     override fun onPageScrollStateChanged(state: Int) {
     }
@@ -91,8 +148,23 @@ class CtkStepTabLayout @JvmOverloads constructor(
         if (tabs[position] == selectedTab) {
             return
         }
+
         selectedTab.collapse()
         selectedTab = tabs[position]
-        selectedTab.expand(EXPANDED_TAB_WIDTH)
+        selectedTab.expand(settings.EXPANDED_TAB_WIDTH)
+
+        invalidateSeparators()
+    }
+
+    inner class Settings {
+        private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
+
+        private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
+
+        val EXPANDED_TAB_WIDTH: Int
+            get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
+
+        val EQUITABLE_TAB_WIDTH: Int
+            get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
     }
 }
