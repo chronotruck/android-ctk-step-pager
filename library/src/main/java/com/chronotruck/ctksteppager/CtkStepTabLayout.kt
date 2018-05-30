@@ -22,19 +22,10 @@ class CtkStepTabLayout @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
 
+    private val settings = Settings()
+
     private var viewPager: ViewPager? = null
-
     private lateinit var selectedTab: CtkStepTab
-
-    private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
-
-    private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
-
-    private val EXPANDED_TAB_WIDTH: Int
-        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
-
-    private val EQUITABLE_TAB_WIDTH: Int
-        get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
 
     val tabs = LinkedList<CtkStepTab>()
 
@@ -58,7 +49,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
             if (endPositionInclusive == tabCount - 1) {
-                tabs[it].expand(EQUITABLE_TAB_WIDTH)
+                tabs[it].expand(settings.EQUITABLE_TAB_WIDTH)
             }
         }
     }
@@ -114,6 +105,18 @@ class CtkStepTabLayout @JvmOverloads constructor(
         }
         selectedTab.collapse()
         selectedTab = tabs[position]
-        selectedTab.expand(EXPANDED_TAB_WIDTH)
+        selectedTab.expand(settings.EXPANDED_TAB_WIDTH)
+    }
+
+    inner class Settings {
+        private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
+
+        private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
+
+        val EXPANDED_TAB_WIDTH: Int
+            get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
+
+        val EQUITABLE_TAB_WIDTH: Int
+            get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
     }
 }
