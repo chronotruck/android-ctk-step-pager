@@ -4,8 +4,7 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import java.util.*
@@ -60,28 +59,35 @@ class CtkStepTabLayout @JvmOverloads constructor(
         }
     }
 
+    private fun createTab(title: CharSequence?, stepNumber: Int): CtkStepTab {
+        return CtkStepTab(context).apply {
+            this.title = title.toString()
+            this.stepNumber = stepNumber
+            this.isExpanded = false
+        }
+    }
+
+    private fun createSeparator(): ImageView {
+        return ImageView(context).apply {
+            this.layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    0f
+            )
+            this.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_arrow))
+        }
+    }
+
     private fun init() {
         viewPager!!.adapter?.let {
             var tab: CtkStepTab
             for (i in 0 until it.count) {
-                tab = CtkStepTab(context).apply {
-                    title = it.getPageTitle(i).toString()
-                    stepNumber = i + 1
-                }
-                tab.isExpanded = false
+                tab = createTab(it.getPageTitle(i), i + 1)
                 tabs.add(tab)
                 addView(tab)
 
                 if (i != it.count - 1) {
-                    val separator = ImageView(context).apply {
-                        layoutParams = LinearLayout.LayoutParams(
-                                WRAP_CONTENT,
-                                MATCH_PARENT,
-                                0f
-                        )
-                        setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_arrow))
-                    }
-                    addView(separator)
+                    addView(createSeparator())
                 }
             }
 
