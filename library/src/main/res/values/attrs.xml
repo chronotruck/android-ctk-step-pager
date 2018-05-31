@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CtkStepTab">
-        <attr name="activeTabBackgroundColor" format="color"/>
-        <attr name="inactiveTabBackgroundColor" format="color"/>
-        <attr name="doneTabBackgroundColor" format="color"/>
-        <attr name="activeTextColor" format="color"/>
-        <attr name="inactiveTextColor" format="color"/>
-        <attr name="doneIconColor" format="color"/>
+    <declare-styleable name="CtkStepPager">
+        <attr name="sp_activeTabBackgroundColor" format="color"/>
+        <attr name="sp_inactiveTabBackgroundColor" format="color"/>
+        <attr name="sp_doneTabBackgroundColor" format="color"/>
+        <attr name="sp_activeTabTextColor" format="color"/>
+        <attr name="sp_inactiveTabTextColor" format="color"/>
+        <attr name="sp_doneTabIconColor" format="color"/>
     </declare-styleable>
 </resources>

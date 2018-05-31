@@ -4,8 +4,8 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.support.constraint.ConstraintLayout
+import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
@@ -80,8 +80,6 @@ class CtkStepTab @JvmOverloads constructor(
         titleTv = findViewById(R.id.title_textview)
         badgeTv = findViewById(R.id.badge_textview)
         doneIv = findViewById(R.id.done_imageview)
-
-        settings.init(context!!, attrs)
 
         update()
     }
@@ -309,49 +307,35 @@ class CtkStepTab @JvmOverloads constructor(
     }
 
     class Settings(private val view: CtkStepTab) {
-        var activeTabColorBackground: Int = Color.parseColor("#277696")
+        var activeTabColorBackground: Int = ContextCompat.getColor(view.context, R.color.default_steptab_background_open)
             set(value) {
                 field = value
                 view.update()
             }
-        var inactiveTabColorBackground: Int = Color.parseColor("#F4F5F5")
+        var inactiveTabColorBackground: Int = ContextCompat.getColor(view.context, R.color.default_steptab_background_close)
             set(value) {
                 field = value
                 view.update()
             }
-        var doneTabColorBackground: Int = Color.parseColor("#96BF31")
+        var doneTabColorBackground: Int = ContextCompat.getColor(view.context, R.color.default_steptab_background_done)
             set(value) {
                 field = value
                 view.update()
             }
-        var activeTextColor: Int = Color.parseColor("#FFFFFF")
+        var activeTextColor: Int = ContextCompat.getColor(view.context, R.color.default_steptab_text_open)
             set(value) {
                 field = value
                 view.update()
             }
-        var inactiveTextColor: Int = Color.parseColor("#277696")
+        var inactiveTextColor: Int = ContextCompat.getColor(view.context, R.color.default_steptab_background_close)
             set(value) {
                 field = value
                 view.update()
             }
-        var doneIconColor: Int = doneTabColorBackground
+        var doneIconColor: Int = ContextCompat.getColor(view.context, R.color.default_steptab_background_done)
             set(value) {
                 field = value
                 view.update()
             }
-
-        fun init(context: Context, attrs: AttributeSet?) {
-            attrs?.let {
-                context.obtainStyledAttributes(attrs, R.styleable.CtkStepTab).let {
-                    activeTabColorBackground = it.getColor(R.styleable.CtkStepTab_activeTabBackgroundColor, activeTabColorBackground)
-                    inactiveTabColorBackground = it.getColor(R.styleable.CtkStepTab_inactiveTabBackgroundColor, inactiveTabColorBackground)
-                    doneTabColorBackground = it.getColor(R.styleable.CtkStepTab_doneTabBackgroundColor, doneTabColorBackground)
-                    activeTextColor = it.getColor(R.styleable.CtkStepTab_activeTextColor, activeTextColor)
-                    inactiveTextColor = it.getColor(R.styleable.CtkStepTab_inactiveTextColor, inactiveTextColor)
-                    doneIconColor = it.getColor(R.styleable.CtkStepTab_doneIconColor, doneIconColor)
-                    it.recycle()
-                }
-            }
-        }
     }
 }

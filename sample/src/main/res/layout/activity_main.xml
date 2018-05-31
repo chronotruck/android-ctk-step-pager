@@ -11,7 +11,13 @@
     <com.chronotruck.ctksteppager.CtkStepPager
         android:id="@+id/steppager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:sp_activeTabBackgroundColor="@color/blue"
+        app:sp_activeTabTextColor="@color/white"
+        app:sp_doneTabBackgroundColor="@color/green"
+        app:sp_doneTabIconColor="@color/green"
+        app:sp_inactiveTabBackgroundColor="@color/grey"
+        app:sp_inactiveTabTextColor="@color/blue"/>
 
     <Button
         android:id="@+id/done_button"
