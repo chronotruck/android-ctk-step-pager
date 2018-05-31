@@ -1,10 +1,12 @@
 package com.chronotruck.ctksteppager
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.widget.LinearLayout
+
 
 /**
  * @Author McGalanes
@@ -20,17 +22,17 @@ class CtkStepPager @JvmOverloads constructor(
     val viewPager: ViewPager
     val stepTabLayout: CtkStepTabLayout
 
-    var activeTabColorBackground: Int? = null
+    var activeTabColorBackground: Int = ContextCompat.getColor(context!!, R.color.default_steptab_background_open)
 
-    var inactiveTabColorBackground: Int? = null
+    var inactiveTabColorBackground: Int = ContextCompat.getColor(context!!, R.color.default_steptab_background_close)
 
-    var doneTabColorBackground: Int? = null
+    var doneTabColorBackground: Int = ContextCompat.getColor(context!!, R.color.default_steptab_background_done)
 
-    var activeTabTextColor: Int? = null
+    var activeTabTextColor: Int = ContextCompat.getColor(context!!, R.color.default_steptab_text_open)
 
-    var inactiveTabTextColor: Int? = null
+    var inactiveTabTextColor: Int = ContextCompat.getColor(context!!, R.color.default_steptab_text_close)
 
-    var doneTabIconColor: Int? = null
+    var doneTabIconColor: Int = ContextCompat.getColor(context!!, R.color.default_steptab_background_done)
 
     var adapter: PagerAdapter? = null
         set(value) {
@@ -41,12 +43,12 @@ class CtkStepPager @JvmOverloads constructor(
     private fun initStepTabLayout() {
         viewPager.adapter = adapter
         stepTabLayout.apply {
-            this@CtkStepPager.activeTabColorBackground?.let { this.activeTabColorBackground = it }
-            this@CtkStepPager.inactiveTabColorBackground?.let { this.inactiveTabColorBackground = it }
-            this@CtkStepPager.doneTabColorBackground?.let { this.doneTabColorBackground = it }
-            this@CtkStepPager.activeTabTextColor?.let { this.activeTabTextColor = it }
-            this@CtkStepPager.inactiveTabTextColor?.let { this.inactiveTabTextColor = it }
-            this@CtkStepPager.doneTabIconColor?.let { this.doneTabIconColor = it }
+            this.activeTabColorBackground = this@CtkStepPager.activeTabColorBackground
+            this.inactiveTabColorBackground = this@CtkStepPager.inactiveTabColorBackground
+            this.doneTabColorBackground = this@CtkStepPager.doneTabColorBackground
+            this.activeTabTextColor = this@CtkStepPager.activeTabTextColor
+            this.inactiveTabTextColor = this@CtkStepPager.inactiveTabTextColor
+            this.doneTabIconColor = this@CtkStepPager.doneTabIconColor
             setupWithViewPager(viewPager)
         }
     }
@@ -65,9 +67,26 @@ class CtkStepPager @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.view_ctk_step_pager, this)
+
         orientation = VERTICAL
 
         viewPager = findViewById(R.id.viewpager)
         stepTabLayout = findViewById(R.id.tablayout)
+
+        resolveAttrs(attrs)
+    }
+
+    private fun resolveAttrs(attrs: AttributeSet?) {
+        attrs?.let {
+            context.obtainStyledAttributes(attrs, R.styleable.CtkStepPager).apply {
+                activeTabColorBackground = getColor(R.styleable.CtkStepPager_sp_activeTabBackgroundColor, activeTabColorBackground)
+                inactiveTabColorBackground = getColor(R.styleable.CtkStepPager_sp_inactiveTabBackgroundColor, inactiveTabColorBackground)
+                doneTabColorBackground = getColor(R.styleable.CtkStepPager_sp_doneTabBackgroundColor, doneTabColorBackground)
+                activeTabTextColor = getColor(R.styleable.CtkStepPager_sp_activeTabTextColor, activeTabTextColor)
+                inactiveTabTextColor = getColor(R.styleable.CtkStepPager_sp_inactiveTabTextColor, inactiveTabTextColor)
+                doneTabIconColor = getColor(R.styleable.CtkStepPager_sp_doneTabIconColor, doneTabIconColor)
+                recycle()
+            }
+        }
     }
 }
