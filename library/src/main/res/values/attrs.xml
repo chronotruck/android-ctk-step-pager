@@ -1,11 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CtkStepTab">
-        <attr name="st_activeTabBackgroundColor" format="color"/>
-        <attr name="st_inactiveTabBackgroundColor" format="color"/>
-        <attr name="st_doneTabBackgroundColor" format="color"/>
-        <attr name="st_activeTextColor" format="color"/>
-        <attr name="st_inactiveTextColor" format="color"/>
-        <attr name="st_doneIconColor" format="color"/>
-    </declare-styleable>
 </resources>

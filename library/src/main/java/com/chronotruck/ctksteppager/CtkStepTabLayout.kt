@@ -23,7 +23,27 @@ class CtkStepTabLayout @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
 
-    private val settings: Settings = Settings()
+    private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
+
+    private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
+
+    val EXPANDED_TAB_WIDTH: Int
+        get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
+
+    val EQUITABLE_TAB_WIDTH: Int
+        get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
+
+    var activeTabColorBackground: Int? = null
+
+    var inactiveTabColorBackground: Int? = null
+
+    var doneTabColorBackground: Int? = null
+
+    var activeTextColor: Int? = null
+
+    var inactiveTextColor: Int? = null
+
+    var doneIconColor: Int? = null
 
     private var viewPager: ViewPager? = null
     private lateinit var selectedTab: CtkStepTab
@@ -51,7 +71,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
             if (endPositionInclusive == tabCount - 1) {
-                tabs[it].expand(settings.EQUITABLE_TAB_WIDTH)
+                tabs[it].expand(EQUITABLE_TAB_WIDTH)
             }
         }
         invalidateSeparators()
@@ -85,8 +105,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
             invalidateSeparator(
                     separators[currentItemPosition],
-                    ContextCompat.getColor(context, R.color.blue),
-                    ContextCompat.getColor(context, R.color.grey)
+                    selectedTab.settings.activeTabColorBackground,
+                    selectedTab.settings.inactiveTabColorBackground
             )
         }
 
@@ -98,6 +118,15 @@ class CtkStepTabLayout @JvmOverloads constructor(
             this.title = title.toString()
             this.stepNumber = stepNumber
             this.isExpanded = false
+
+            settings.apply {
+                this@CtkStepTabLayout.activeTabColorBackground?.let { this.activeTabColorBackground = it }
+                this@CtkStepTabLayout.inactiveTabColorBackground?.let { this.inactiveTabColorBackground = it }
+                this@CtkStepTabLayout.doneTabColorBackground?.let { this.doneTabColorBackground = it }
+                this@CtkStepTabLayout.activeTextColor?.let { this.activeTextColor = it }
+                this@CtkStepTabLayout.inactiveTextColor?.let { this.inactiveTextColor = it }
+                this@CtkStepTabLayout.doneIconColor?.let { this.doneIconColor = it }
+            }
         }
     }
 
@@ -151,20 +180,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
         selectedTab.collapse()
         selectedTab = tabs[position]
-        selectedTab.expand(settings.EXPANDED_TAB_WIDTH)
+        selectedTab.expand(EXPANDED_TAB_WIDTH)
 
         invalidateSeparators()
-    }
-
-    inner class Settings {
-        private val triangleSeparatorWidth: Int = resources.getDimension(R.dimen.steptablayout_triangle_separator_width).toInt()
-
-        private val stepTabWidthCollapsed: Int = resources.getDimension(R.dimen.steptab_width_collapsed).toInt()
-
-        val EXPANDED_TAB_WIDTH: Int
-            get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
-
-        val EQUITABLE_TAB_WIDTH: Int
-            get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
     }
 }

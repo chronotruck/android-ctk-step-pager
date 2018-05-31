@@ -81,8 +81,6 @@ class CtkStepTab @JvmOverloads constructor(
         badgeTv = findViewById(R.id.badge_textview)
         doneIv = findViewById(R.id.done_imageview)
 
-        settings.init(context!!, attrs)
-
         update()
     }
 
@@ -339,19 +337,5 @@ class CtkStepTab @JvmOverloads constructor(
                 field = value
                 view.update()
             }
-
-        fun init(context: Context, attrs: AttributeSet?) {
-            attrs?.let {
-                context.obtainStyledAttributes(attrs, R.styleable.CtkStepTab).let {
-                    activeTabColorBackground = it.getColor(R.styleable.CtkStepTab_st_activeTabBackgroundColor, activeTabColorBackground)
-                    inactiveTabColorBackground = it.getColor(R.styleable.CtkStepTab_st_inactiveTabBackgroundColor, inactiveTabColorBackground)
-                    doneTabColorBackground = it.getColor(R.styleable.CtkStepTab_st_doneTabBackgroundColor, doneTabColorBackground)
-                    activeTextColor = it.getColor(R.styleable.CtkStepTab_st_activeTextColor, activeTextColor)
-                    inactiveTextColor = it.getColor(R.styleable.CtkStepTab_st_inactiveTextColor, inactiveTextColor)
-                    doneIconColor = it.getColor(R.styleable.CtkStepTab_st_doneIconColor, doneIconColor)
-                    it.recycle()
-                }
-            }
-        }
     }
 }
