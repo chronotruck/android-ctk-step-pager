@@ -20,13 +20,36 @@ class CtkStepPager @JvmOverloads constructor(
     val viewPager: ViewPager
     val stepTabLayout: CtkStepTabLayout
 
+    var activeTabColorBackground: Int? = null
+
+    var inactiveTabColorBackground: Int? = null
+
+    var doneTabColorBackground: Int? = null
+
+    var activeTabTextColor: Int? = null
+
+    var inactiveTabTextColor: Int? = null
+
+    var doneTabIconColor: Int? = null
+
     var adapter: PagerAdapter? = null
-        get() = viewPager.adapter
         set(value) {
             field = value
-            viewPager.adapter = value
-            stepTabLayout.setupWithViewPager(viewPager)
+            initStepTabLayout()
         }
+
+    private fun initStepTabLayout() {
+        viewPager.adapter = adapter
+        stepTabLayout.apply {
+            this@CtkStepPager.activeTabColorBackground?.let { this.activeTabColorBackground = it }
+            this@CtkStepPager.inactiveTabColorBackground?.let { this.inactiveTabColorBackground = it }
+            this@CtkStepPager.doneTabColorBackground?.let { this.doneTabColorBackground = it }
+            this@CtkStepPager.activeTabTextColor?.let { this.activeTabTextColor = it }
+            this@CtkStepPager.inactiveTabTextColor?.let { this.inactiveTabTextColor = it }
+            this@CtkStepPager.doneTabIconColor?.let { this.doneTabIconColor = it }
+            setupWithViewPager(viewPager)
+        }
+    }
 
     fun doneCurrentStepTab() {
         stepTabLayout.doneCurrentStepTab()
@@ -36,7 +59,7 @@ class CtkStepPager @JvmOverloads constructor(
         stepTabLayout.doneStepTabUntil(endPositionInclusive)
     }
 
-    fun resetAllStepTabs(){
+    fun resetAllStepTabs() {
         stepTabLayout.resetAllStepTabs()
     }
 

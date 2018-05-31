@@ -39,11 +39,11 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     var doneTabColorBackground: Int? = null
 
-    var activeTextColor: Int? = null
+    var activeTabTextColor: Int? = null
 
-    var inactiveTextColor: Int? = null
+    var inactiveTabTextColor: Int? = null
 
-    var doneIconColor: Int? = null
+    var doneTabIconColor: Int? = null
 
     private var viewPager: ViewPager? = null
     private lateinit var selectedTab: CtkStepTab
@@ -123,9 +123,9 @@ class CtkStepTabLayout @JvmOverloads constructor(
                 this@CtkStepTabLayout.activeTabColorBackground?.let { this.activeTabColorBackground = it }
                 this@CtkStepTabLayout.inactiveTabColorBackground?.let { this.inactiveTabColorBackground = it }
                 this@CtkStepTabLayout.doneTabColorBackground?.let { this.doneTabColorBackground = it }
-                this@CtkStepTabLayout.activeTextColor?.let { this.activeTextColor = it }
-                this@CtkStepTabLayout.inactiveTextColor?.let { this.inactiveTextColor = it }
-                this@CtkStepTabLayout.doneIconColor?.let { this.doneIconColor = it }
+                this@CtkStepTabLayout.activeTabTextColor?.let { this.activeTextColor = it }
+                this@CtkStepTabLayout.inactiveTabTextColor?.let { this.inactiveTextColor = it }
+                this@CtkStepTabLayout.doneTabIconColor?.let { this.doneIconColor = it }
             }
         }
     }
