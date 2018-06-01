@@ -1,11 +1,17 @@
 # CtkStepPager
 ViewPager with stepped TabLayout
 
+| master | dev |
+|:-:|:-:|
+| [![CircleCI-Master](https://circleci.com/gh/chronotruck/android-ctk-step-pager/tree/master.svg?style=svg&circle-token=dc3aab654f463ab49d4427910c758722461b7531)](https://circleci.com/gh/chronotruck/android-ctk-step-pager/tree/master) | [![CircleCI-Dev](https://circleci.com/gh/chronotruck/android-ctk-step-pager/tree/dev.svg?style=svg&circle-token=dc3aab654f463ab49d4427910c758722461b7531)](https://circleci.com/gh/chronotruck/android-ctk-step-pager/tree/dev) |
+
 <img src="https://raw.githubusercontent.com/chronotruck/android-ctk-step-pager/dev/art/gf.gif"/>
 
 
 
 # Download
+![minSdkVersion](https://img.shields.io/badge/minSdkVersion-19-blue.svg) [![Release](https://jitpack.io/v/chronotruck/android-ctk-step-pager.svg)](https://jitpack.io/#chronotruck/android-ctk-step-pager)
+
 ```gradle
 allprojects {
     repositories {
@@ -60,7 +66,7 @@ ctkStepPager.apply {
 
 ctkStepPager.adapter = fragmentPagerAdapter
 ```
-> Call `adapter` after `CtkStepPager` customization
+> /!\ set `CtkStepPager.adapter` after customization
 
 ## Usage
 `CtkStepPager` is a ready to use view component that contains `CtkTabLayout` and `ViewPager`
