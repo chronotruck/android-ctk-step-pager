@@ -183,7 +183,6 @@ class CtkStepTab @JvmOverloads constructor(
                 }
 
                 override fun onAnimationStart(animator: Animator?) {
-                    showExpandedBackground()
                     onAnimationStart.invoke()
                 }
             })
