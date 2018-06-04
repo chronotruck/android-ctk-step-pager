@@ -33,17 +33,17 @@ class CtkStepTabLayout @JvmOverloads constructor(
     val EQUITABLE_TAB_WIDTH: Int
         get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
 
-    var activeTabColorBackground: Int? = null
+    var activeTabColorBackground = ContextCompat.getColor(context!!, R.color.default_steptab_background_open)
 
-    var inactiveTabColorBackground: Int? = null
+    var inactiveTabColorBackground = ContextCompat.getColor(context!!, R.color.default_steptab_background_close)
 
-    var doneTabColorBackground: Int? = null
+    var doneTabColorBackground = ContextCompat.getColor(context!!, R.color.default_steptab_background_done)
 
-    var activeTabTextColor: Int? = null
+    var activeTabTextColor = ContextCompat.getColor(context!!, R.color.default_steptab_text_open)
 
-    var inactiveTabTextColor: Int? = null
+    var inactiveTabTextColor = ContextCompat.getColor(context!!, R.color.default_steptab_background_close)
 
-    var doneTabIconColor: Int? = null
+    var doneTabIconColor = ContextCompat.getColor(context!!, R.color.default_steptab_background_done)
 
     private var viewPager: ViewPager? = null
     private lateinit var selectedTab: CtkStepTab
@@ -119,13 +119,13 @@ class CtkStepTabLayout @JvmOverloads constructor(
             this.stepNumber = stepNumber
             this.isExpanded = false
 
-            settings.apply {
-                this@CtkStepTabLayout.activeTabColorBackground?.let { this.activeTabColorBackground = it }
-                this@CtkStepTabLayout.inactiveTabColorBackground?.let { this.inactiveTabColorBackground = it }
-                this@CtkStepTabLayout.doneTabColorBackground?.let { this.doneTabColorBackground = it }
-                this@CtkStepTabLayout.activeTabTextColor?.let { this.activeTextColor = it }
-                this@CtkStepTabLayout.inactiveTabTextColor?.let { this.inactiveTextColor = it }
-                this@CtkStepTabLayout.doneTabIconColor?.let { this.doneIconColor = it }
+            settings.let {
+                it.activeTabColorBackground = this@CtkStepTabLayout.activeTabColorBackground
+                it.inactiveTabColorBackground = this@CtkStepTabLayout.inactiveTabColorBackground
+                it.doneTabColorBackground = this@CtkStepTabLayout.doneTabColorBackground
+                it.activeTextColor = this@CtkStepTabLayout.activeTabTextColor
+                it.inactiveTextColor = this@CtkStepTabLayout.inactiveTabTextColor
+                it.doneIconColor = this@CtkStepTabLayout.doneTabIconColor
             }
         }
     }
@@ -140,8 +140,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
             invalidateSeparator(
                     this,
-                    ContextCompat.getColor(context, R.color.grey),
-                    ContextCompat.getColor(context, R.color.grey)
+                    inactiveTabColorBackground,
+                    inactiveTabColorBackground
             )
         }
     }

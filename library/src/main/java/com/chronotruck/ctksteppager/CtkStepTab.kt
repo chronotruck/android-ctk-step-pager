@@ -98,6 +98,12 @@ class CtkStepTab @JvmOverloads constructor(
         titleTv.setTextColor(textColorStateList)
         badgeTv.setTextColor(textColorStateList)
         DrawableCompat.setTint(doneIv.drawable, settings.doneIconColor)
+
+        setBackgroundColor(if (isActivated) {
+            settings.activeTabColorBackground
+        } else {
+            settings.inactiveTabColorBackground
+        })
     }
 
     override fun onAttachedToWindow() {
