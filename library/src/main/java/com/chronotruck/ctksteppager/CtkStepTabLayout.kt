@@ -58,6 +58,17 @@ class CtkStepTabLayout @JvmOverloads constructor(
         orientation = LinearLayout.HORIZONTAL
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        tabs.forEachIndexed({ i, tab ->
+            if (i == 0) {
+                tab.expand(EXPANDED_TAB_WIDTH)
+            } else {
+                tab.collapse()
+            }
+        })
+    }
+
     fun setupWithViewPager(viewPager: ViewPager) {
         this.viewPager = viewPager
         init()
@@ -101,7 +112,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
             val currentItemPosition = this.viewPager!!.currentItem
             selectedTab = tabs[currentItemPosition]
-            selectedTab.isExpanded = true
+            selectedTab.expand(EXPANDED_TAB_WIDTH)
 
             invalidateSeparator(
                     separators[currentItemPosition],
@@ -117,7 +128,6 @@ class CtkStepTabLayout @JvmOverloads constructor(
         return CtkStepTab(context).apply {
             this.title = title.toString()
             this.stepNumber = stepNumber
-            this.isExpanded = false
 
             settings.let {
                 it.activeTabColorBackground = this@CtkStepTabLayout.activeTabColorBackground
