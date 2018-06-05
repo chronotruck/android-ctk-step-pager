@@ -52,6 +52,7 @@ class CtkStepTab @JvmOverloads constructor(
                     weight = 1f
                 }
                 showExpandedBackground()
+                showLabels()
             } else {
                 (layoutParams as LinearLayout.LayoutParams).width = LinearLayout.LayoutParams.WRAP_CONTENT
                 showCollapsedBackground()
