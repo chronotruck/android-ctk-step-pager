@@ -21,7 +21,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.chronotruck:android-ctk-step-pager:1.0.1'
+    implementation 'com.github.chronotruck:android-ctk-step-pager:1.0.2'
 }
 ```
 
@@ -69,7 +69,6 @@ ctkStepPager.adapter = fragmentPagerAdapter
 > /!\ set `CtkStepPager.adapter` after customization
 
 ## Usage
-`CtkStepPager` is a ready to use view component that contains `CtkTabLayout` and `ViewPager`
 
 |   Methods                   |  Description  |
 | --------------------------- | ------------- |
@@ -90,7 +89,7 @@ License
 --------
 
 
-    Copyright 2018 Chronotruck.
+    Copyright 2018 Chronotruck
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -103,9 +102,3 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-
-
-
-
