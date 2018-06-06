@@ -30,9 +30,6 @@ class CtkStepTabLayout @JvmOverloads constructor(
     val EXPANDED_TAB_WIDTH: Int
         get() = (Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * (stepTabWidthCollapsed + triangleSeparatorWidth)
 
-    val EQUITABLE_TAB_WIDTH: Int
-        get() = ((Util.getDeviceScreenSize(context!!).x) - (tabCount - 1) * triangleSeparatorWidth) / tabCount
-
     var activeTabColorBackground = ContextCompat.getColor(context!!, R.color.default_steptab_background_open)
 
     var inactiveTabColorBackground = ContextCompat.getColor(context!!, R.color.default_steptab_background_close)
@@ -81,9 +78,6 @@ class CtkStepTabLayout @JvmOverloads constructor(
     fun doneStepTabUntil(endPositionInclusive: Int) {
         IntRange(0, endPositionInclusive).forEach {
             tabs[it].done()
-            if (endPositionInclusive == tabCount - 1) {
-                tabs[it].expand(EQUITABLE_TAB_WIDTH)
-            }
         }
         invalidateSeparators()
     }
