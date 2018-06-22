@@ -92,6 +92,8 @@ class CtkStepTab @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         layoutParams.height = resources.getDimension(R.dimen.steptab_height).toInt()
+        if (isActivated) return
+        collapse()
     }
 
     fun expand(finalWidth: Int) {
