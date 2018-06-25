@@ -57,13 +57,13 @@ class CtkStepTabLayout @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        tabs.forEachIndexed({ i, tab ->
+        tabs.forEachIndexed { i, tab ->
             if (i == 0) {
                 tab.expand(EXPANDED_TAB_WIDTH)
             } else {
                 tab.collapse()
             }
-        })
+        }
     }
 
     fun setupWithViewPager(viewPager: ViewPager) {

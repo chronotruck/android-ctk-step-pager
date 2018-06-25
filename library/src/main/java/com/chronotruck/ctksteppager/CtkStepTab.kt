@@ -102,7 +102,7 @@ class CtkStepTab @JvmOverloads constructor(
                 from = measuredWidth,
                 to = finalWidth,
                 onAnimationStart = {
-                    hideLabels(false, { showLabels(showBadge = !isDone) })
+                    hideLabels(false) { showLabels(showBadge = !isDone) }
                     showExpandedBackground()
                 },
                 onAnimationEnd = {
@@ -121,7 +121,7 @@ class CtkStepTab @JvmOverloads constructor(
                     if (!isDone) {
                         showCollapsedBackground()
                     }
-                    hideLabels(true, { if (!isDone) showBadge() })
+                    hideLabels(true) { if (!isDone) showBadge() }
                 }
         ).start()
     }
@@ -130,7 +130,7 @@ class CtkStepTab @JvmOverloads constructor(
         if (isDone) return
         isDone = true
         setBackgroundColor(settings.doneTabColorBackground)
-        hideLabels(false, { showDoneLabel() })
+        hideLabels(false) { showDoneLabel() }
     }
 
     fun undone() {
