@@ -29,7 +29,7 @@ dependencies {
 
 # Setup
 Declare the CtkStepPager in your xml
-```html
+```xml
 <com.chronotruck.ctksteppager.CtkStepPager
         android:id="@+id/steppager"
         android:layout_width="match_parent"
