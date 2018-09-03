@@ -21,7 +21,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.chronotruck:android-ctk-step-pager:1.0.2'
+    implementation 'com.github.chronotruck:android-ctk-step-pager:1.1.0'
 }
 ```
 
