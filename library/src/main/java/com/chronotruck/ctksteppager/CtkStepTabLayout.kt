@@ -51,6 +51,9 @@ class CtkStepTabLayout @JvmOverloads constructor(
     val tabCount: Int
         get() = viewPager!!.adapter!!.count
 
+
+    private val onTabClick: (position: Int) -> Unit = { viewPager?.currentItem = it }
+
     init {
         orientation = LinearLayout.HORIZONTAL
     }
@@ -93,7 +96,7 @@ class CtkStepTabLayout @JvmOverloads constructor(
         viewPager!!.adapter?.let {
             var tab: CtkStepTab
             for (i in 0 until it.count) {
-                tab = createTab(it.getPageTitle(i), i + 1)
+                tab = createTab(it.getPageTitle(i), i)
                 tabs.add(tab)
                 addView(tab)
 
@@ -118,10 +121,10 @@ class CtkStepTabLayout @JvmOverloads constructor(
         viewPager!!.addOnPageChangeListener(this)
     }
 
-    private fun createTab(title: CharSequence?, stepNumber: Int): CtkStepTab {
+    private fun createTab(title: CharSequence?, position: Int): CtkStepTab {
         return CtkStepTab(context).apply {
             this.title = title.toString()
-            this.stepNumber = stepNumber
+            this.stepNumber = position + 1
 
             settings.let {
                 it.activeTabColorBackground = this@CtkStepTabLayout.activeTabColorBackground
@@ -131,6 +134,8 @@ class CtkStepTabLayout @JvmOverloads constructor(
                 it.inactiveTextColor = this@CtkStepTabLayout.inactiveTabTextColor
                 it.doneIconColor = this@CtkStepTabLayout.doneTabIconColor
             }
+
+            setOnClickListener { onTabClick.invoke(position) }
         }
     }
 
