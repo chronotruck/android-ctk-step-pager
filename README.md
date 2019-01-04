@@ -83,7 +83,7 @@ ctkStepPager.adapter = fragmentPagerAdapter
 # Author
 [Melwin Magalhaes](http://github.com/mcgalanes)
 
-
+Open source time proudly sponsored by Chronotruck
 
 License
 --------
