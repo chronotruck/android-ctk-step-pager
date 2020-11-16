@@ -65,6 +65,10 @@ class CtkStepPager @JvmOverloads constructor(
         stepTabLayout.resetAllStepTabs()
     }
 
+    fun disableAllNextTabs(currentTab: Int) {
+        stepTabLayout.disableAllNextTabs(currentTab)
+    }
+
     init {
         inflate(context, R.layout.view_ctk_step_pager, this)
 
