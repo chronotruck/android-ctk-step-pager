@@ -75,6 +75,7 @@ ctkStepPager.adapter = fragmentPagerAdapter
 | doneCurrentStepTab() | set current step tab **done** |
 | doneStepTabUntil(endPositionInclusive: Int) | set steb tabs **done** until `endPositionInclusive`  |
 | resetAllStepTabs() | undone all steb tabs |
+| disableAllNextTabs(currentTab: Int) | disable click handling on all tabs after the specified current tab |
 
 > `CtkTabLayout` can also be used with your own ViewPager by calling `CtkTabLayout.setupWithViewPager(ViewPager)`
 
