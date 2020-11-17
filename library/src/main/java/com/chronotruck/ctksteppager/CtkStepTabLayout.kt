@@ -92,6 +92,15 @@ class CtkStepTabLayout @JvmOverloads constructor(
         invalidateSeparators()
     }
 
+    fun disableAllNextTabs(currentTab: Int) {
+        tabs.forEachIndexed { index, tab ->
+            if (index > currentTab) {
+                tab.setOnClickListener(null)
+                viewPager?.getChildAt(index)?.isClickable = false
+            }
+        }
+    }
+
     private fun init() {
         viewPager!!.adapter?.let {
             var tab: CtkStepTab
