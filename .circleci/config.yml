@@ -3,7 +3,7 @@ jobs:
   build_debug:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-27-node8-alpha
+      - image: ccistaging/android:api-29
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
